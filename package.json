@@ -1,0 +1,19 @@
+{
+  "name": "gallery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glebvoronin13/gallery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glebvoronin13/gallery/issues"
+  },
+  "homepage": "https://github.com/glebvoronin13/gallery#readme"
+}
