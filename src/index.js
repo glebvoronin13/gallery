@@ -51,7 +51,6 @@ class Gallery {
       this.items[this.activeIndex].classList.remove('gallery-item-active');
     }
     this.activeIndex = index;
-    this.updateNavigation();
     if (this.countElement) {
       this.countElement.innerHTML = `Slide: ${this.activeIndex + 1} / ${this.totalSlides}`
     }
@@ -60,25 +59,16 @@ class Gallery {
   setNextSlide() {
     if (this.activeIndex + 1 < this.totalSlides) {
       this.setActiveSlide(this.activeIndex + 1);
+    } else {
+      this.setActiveSlide(0);
     }
   }
 
   setPrevSlide() {
     if (this.activeIndex > 0) {
       this.setActiveSlide(this.activeIndex - 1);
-    }
-  }
-
-  updateNavigation() {
-    if (this.nextButton && this.activeIndex + 1 === this.totalSlides) {
-      this.nextButton.classList.add('gallery-next-disabled')
-    } else if (this.nextButton) {
-      this.nextButton.classList.remove('gallery-next-disabled')
-    }
-    if (this.prevButton && this.activeIndex === 0) {
-      this.prevButton.classList.add('gallery-prev-disabled')
-    } else if (this.prevButton) {
-      this.prevButton.classList.remove('gallery-prev-disabled')
+    } else {
+      this.setActiveSlide(this.totalSlides - 1);
     }
   }
 

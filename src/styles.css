@@ -31,10 +31,6 @@
     cursor: pointer;
     padding: 0 10px;
 }
-.gallery-next-disabled, .gallery-prev-disabled {
-    opacity: .5;
-    cursor: not-allowed;
-}
 .gallery-item {
     position: relative;
     flex-shrink: 0;
