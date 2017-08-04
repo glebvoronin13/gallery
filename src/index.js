@@ -76,8 +76,11 @@ class Gallery {
   }
 
   setEventListeners() {
-    this.instance.addEventListener('click', ($e) => {
-      switch ($e.target.className) {
+    const isTouchAvailable = 'ontouchend' in document;
+    const clickEvent = (isTouchAvailable) ? 'touchend' : 'click';
+    this.instance.addEventListener(clickEvent, ($e) => {
+      const target = (isTouchAvailable) ? $e.changedTouches[0].target.className : $e.target.className;
+      switch (target) {
         case 'gallery-prev':
           this.setPrevSlide();
           break;
@@ -130,7 +133,3 @@ class Gallery {
 }
 
 window.Gallery = Gallery;
-
-const galInstance = new Gallery({
-  selector: '.js-gallery',
-})
