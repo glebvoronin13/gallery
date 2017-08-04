@@ -1,7 +1,7 @@
-import './styles.css';
 import 'core-js/es6/symbol';
 import 'core-js/es6/object';
 import 'core-js/es6/map';
+import './styles.css';
 
 class Gallery {
   constructor(config) {
@@ -12,15 +12,15 @@ class Gallery {
       this.instance = document.querySelector(config.selector);
     }
     if (config.width) {
-      this.instance.style.width=`${+config.width}px`;
+      this.instance.style.width = `${+config.width}px`;
     }
     if (config.height) {
-      this.instance.style.height=`${+config.height}px`;
+      this.instance.style.height = `${+config.height}px`;
     }
     this.items = this.instance.querySelectorAll('.gallery-item');
     this.nextButton = this.instance.querySelector('.gallery-next');
     this.prevButton = this.instance.querySelector('.gallery-prev');
-    if ( !this.items || !this.items.length ) {
+    if (!this.items || !this.items.length) {
       this.disableNavigation();
       try {
         this.instance.querySelector('.gallery-wrapper').innerHTML = `
@@ -56,7 +56,7 @@ class Gallery {
     }
     this.activeIndex = index;
     if (this.countElement) {
-      this.countElement.innerHTML = `Slide: ${this.activeIndex + 1} / ${this.totalSlides}`
+      this.countElement.innerHTML = `Slide: ${this.activeIndex + 1} / ${this.totalSlides}`;
     }
   }
 
@@ -86,16 +86,18 @@ class Gallery {
   }
 
   setEventListeners() {
-    const isTouchAvailable = 'ontouchend' in document;
-    const clickEvent = (isTouchAvailable) ? 'touchend' : 'click';
+    const isTouchDev = 'ontouchend' in document;
+    const clickEvent = (isTouchDev) ? 'touchend' : 'click';
     this.instance.addEventListener(clickEvent, ($e) => {
-      const target = (isTouchAvailable) ? $e.changedTouches[0].target.className : $e.target.className;
+      const target = (isTouchDev) ? $e.changedTouches[0].target.className : $e.target.className;
       switch (target) {
         case 'gallery-prev':
           this.setPrevSlide();
           break;
         case 'gallery-next':
           this.setNextSlide();
+          break;
+        default:
           break;
       }
     });
@@ -127,7 +129,9 @@ class Gallery {
       const currentX = $e.changedTouches ? $e.changedTouches[0].pageX : $e.pageX;
       const currentDistance = (touchStartX === 0) ? 0 : Math.abs(currentX - touchStartX);
       const currentTime = $e.timeStamp;
-      if (touchStartTime !== 0 && currentTime - touchStartTime < swipeTimeout && currentDistance > swipeDistance) {
+      if (touchStartTime !== 0
+          && currentTime - touchStartTime < swipeTimeout
+          && currentDistance > swipeDistance) {
         switch (true) {
           case (currentX < touchStartX):
             this.setNextSlide();
@@ -135,13 +139,14 @@ class Gallery {
           case (currentX > touchStartX):
             this.setPrevSlide();
             break;
+          default:
+            break;
         }
         touchStartTime = 0;
         touchStartX = 0;
       }
-    })
+    });
   }
-
 }
 
 window.Gallery = Gallery;
