@@ -18,7 +18,10 @@ class Gallery {
       this.instance.style.height=`${+config.height}px`;
     }
     this.items = this.instance.querySelectorAll('.gallery-item');
+    this.nextButton = this.instance.querySelector('.gallery-next');
+    this.prevButton = this.instance.querySelector('.gallery-prev');
     if ( !this.items || !this.items.length ) {
+      this.disableNavigation();
       try {
         this.instance.querySelector('.gallery-wrapper').innerHTML = `
         <span> Gallery has no items </span>
@@ -28,8 +31,6 @@ class Gallery {
       }
       return;
     }
-    this.nextButton = this.instance.querySelector('.gallery-next');
-    this.prevButton = this.instance.querySelector('.gallery-prev');
     this.countElement = this.instance.querySelector('.gallery-count');
     this.activeIndex = 0;
     this.totalSlides = this.items.length;
@@ -75,6 +76,15 @@ class Gallery {
     }
   }
 
+  disableNavigation() {
+    if (this.nextButton) {
+      this.nextButton.classList.add('gallery-next-disabled');
+    }
+    if (this.prevButton) {
+      this.prevButton.classList.add('gallery-prev-disabled');
+    }
+  }
+
   setEventListeners() {
     const isTouchAvailable = 'ontouchend' in document;
     const clickEvent = (isTouchAvailable) ? 'touchend' : 'click';
@@ -88,10 +98,12 @@ class Gallery {
           this.setNextSlide();
           break;
       }
-    })
+    });
+
     window.addEventListener('resize', () => {
       this.setTransform();
-    })
+    });
+
     this.attachSwipeListener();
   }
 
@@ -108,7 +120,7 @@ class Gallery {
       $e.preventDefault();
       touchStartTime = $e.timeStamp;
       touchStartX = $e.changedTouches ? $e.changedTouches[0].pageX : $e.pageX;
-    })
+    });
 
     this.instance.addEventListener(touchEndEvent, ($e) => {
       $e.preventDefault();
