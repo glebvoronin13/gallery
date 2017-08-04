@@ -39,7 +39,8 @@
     opacity: 0;
     background-position: center;
     background-size: cover;
-    transition: opacity 500ms linear;
+    transition: opacity .5s ease-in-out;
+    will-change: opacity;
 }
 
 .gallery-item-active {
