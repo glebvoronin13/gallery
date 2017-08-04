@@ -3,13 +3,14 @@ const webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const srcPath = path.join(__dirname, '/src'),
-  distPath = path.join(__dirname, '/dist');
+const srcPath = path.join(__dirname, '/src');
+const distPath = path.join(__dirname, '/dist');
+const isProd = process.env.npm_lifecycle_event === 'build';
 
 module.exports = {
-  watch: true,
+  watch: !isProd,
   cache: true,
-  devtool: 'inline-source-map',
+  devtool: (isProd) ? 'hidden-source-map' : 'inline-source-map',
   devServer: {
     contentBase: './src',
     historyApiFallback: true,
